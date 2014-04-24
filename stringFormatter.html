@@ -10,14 +10,15 @@
     <title>stringFormatter Function just like string.Format.</title>
 	<script type="text/javascript">
 		stringFormatter = function(str, args) {
+			var regex = /\{(\d+)\}/g;
+
 			if (str.length == 0 || typeof str !== 'string') {
 				throw new Error("Invalid arguments, cannot format string!");
 			  }
-			var regex = /\{(\d+)\}/g;
 
 			return str.replace(regex, function (item) {
-				var intVal = parseInt(item.substring(1, item.length - 1));
-				var replace;
+				var intVal = parseInt(item.substring(1, item.length - 1)), 
+					replace;
 				if (intVal >= 0) {
 					replace = args[intVal];
 				} else {
@@ -26,7 +27,7 @@
 				return replace;
 			});
 		};
-		var str = "She {1} {0}{2} by the {0}{3}. {^_^}";
+		var str = "She {1} {0}{2} by the {0}{3}. {}{^_^}{4}";
 		alert(stringFormatter(str, ["sea", "sells", "shells", "shore"]));
 	</script>
 </head>
